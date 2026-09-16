@@ -4,6 +4,7 @@ export async function api(path, options = {}) {
   const token = localStorage.getItem('articleflow_token')
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),

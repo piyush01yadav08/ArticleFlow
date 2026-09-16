@@ -8,6 +8,7 @@ const items = [
   { label: 'Admin', to: '/admin/dashboard' },
   { label: 'Notifications', to: '/admin/notifications' },
   { label: 'Profile', to: '/admin/profile' },
+{ label: 'Chat', to: '/chat' },
 ]
 
 export default function AdminLayout() {

@@ -8,6 +8,7 @@ const items = [
   { label: 'Create', to: '/author/create' },
   { label: 'Notifications', to: '/author/notifications' },
   { label: 'Profile', to: '/author/profile' },
+{ label: 'Chat', to: '/chat' },
 ]
 
 export default function AuthorLayout() {

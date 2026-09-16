@@ -4,6 +4,7 @@ import {
   markNotificationAsRead,
   markAllNotificationsAsRead,
 } from '../../services/notificationService'
+import { useAuth } from '../../context/AuthContext'
 
 function notificationLabel(type) {
   if (type === 'APPROVED') return 'Article approved'
@@ -11,6 +12,8 @@ function notificationLabel(type) {
   if (type === 'CHANGES_REQUESTED') return 'Changes requested'
   if (type === 'SUBMITTED') return 'Submission received'
   if (type === 'PUBLISHED') return 'New article published'
+  if (type === 'LIKED') return 'New like'
+  if (type === 'FOLLOWED') return 'New follower'
   return 'Notification'
 }
 
@@ -20,6 +23,8 @@ function notificationClass(type) {
   if (type === 'CHANGES_REQUESTED') return 'notification-changes'
   if (type === 'SUBMITTED') return 'notification-submitted'
   if (type === 'PUBLISHED') return 'notification-published'
+  if (type === 'LIKED') return 'notification-liked'
+  if (type === 'FOLLOWED') return 'notification-followed'
   return ''
 }
 
@@ -27,10 +32,13 @@ function notificationIcon(type) {
   if (type === 'APPROVED' || type === 'PUBLISHED') return '✓'
   if (type === 'REJECTED') return '×'
   if (type === 'SUBMITTED') return '↗'
+  if (type === 'LIKED') return '♥'
+  if (type === 'FOLLOWED') return '＋'
   return '✎'
 }
 
 export default function Notifications({ role = 'author' }) {
+  const { user } = useAuth()
   const [notifications, setNotifications] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -41,7 +49,7 @@ export default function Notifications({ role = 'author' }) {
       setError('')
 
       const data = await getNotifications()
-      setNotifications(data)
+      setNotifications(data.filter(notification => String(notification.recipient) === String(user?.id || user?._id)))
     } catch (err) {
       setError(
         err.response?.data?.message ||
@@ -55,7 +63,7 @@ export default function Notifications({ role = 'author' }) {
 
   useEffect(() => {
     loadNotifications()
-  }, [])
+  }, [user?.id, user?._id])
 
   async function handleRead(id) {
     try {

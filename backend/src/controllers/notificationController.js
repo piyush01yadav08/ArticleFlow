@@ -8,7 +8,14 @@ export async function getNotifications(req, res, next) {
       .populate('article', 'title')
       .sort({ createdAt: -1 });
 
-    return res.json(notifications);
+    // Keep recipient in the response so clients can defensively confirm that
+    // a response belongs to the currently signed-in account.
+    return res.set('Cache-Control', 'no-store, private').json(
+      notifications.map((notification) => ({
+        ...notification.toJSON(),
+        recipient: String(notification.recipient),
+      }))
+    );
   } catch (error) {
     next(error);
   }

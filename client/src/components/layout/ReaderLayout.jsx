@@ -7,6 +7,7 @@ const items = [
   { label: 'Browse', to: '/reader/browse' },
   { label: 'Notifications', to: '/reader/notifications' },
   { label: 'Profile', to: '/reader/profile' },
+{ label: 'Chat', to: '/chat' },
 ]
 
 export default function ReaderLayout() {

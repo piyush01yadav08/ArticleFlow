@@ -17,7 +17,10 @@ const articleSchema = new mongoose.Schema({
   coverImage: { type: String },
   readMinutes: { type: Number, default: 0 },
   views: { type: Number, default: 0 },
-  publishedAt: { type: Date }
+  likesCount: { type: Number, default: 0, min: 0 },
+  publishedAt: { type: Date },
+  reviewedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  reviewedAt: { type: Date }
 }, { 
   timestamps: true, 
   versionKey: false,

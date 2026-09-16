@@ -13,5 +13,7 @@ export const articleService = {
   updateArticle: (id, article) => api(`/articles/${id}`, { method: 'PATCH', body: JSON.stringify(article) }),
   deleteArticle: (id) => api(`/articles/${id}`, { method: 'DELETE' }),
   getSavedArticles: () => api('/articles/saved'),
+  getReviewedArticles: () => api('/articles/reviewed'),
   toggleSavedArticle: (id) => api(`/articles/${id}/save`, { method: 'PATCH', body: '{}' }),
+  toggleLike: (id) => api(`/articles/${id}/like`, { method: 'PATCH', body: '{}' }),
 }
